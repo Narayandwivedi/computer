@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(cat:*)",
+      "Read(/C:\\Users\\Naray\\OneDrive\\Desktop\\code\\winners11\\frontend/**)",
+      "Read(/C:\\Users\\Naray\\OneDrive\\Desktop\\code\\winners11\\frontend\\src\\pages/**)",
+      "Read(/C:\\Users\\Naray\\OneDrive\\Desktop\\code\\winners11\\frontend\\src\\components/**)",
+      "Read(/C:\\Users\\Naray\\OneDrive\\Desktop\\code\\winners11\\frontend/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
