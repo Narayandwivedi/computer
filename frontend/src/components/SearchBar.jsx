@@ -122,19 +122,6 @@ const SearchBar = () => {
           )}
         </div>
 
-        {/* Quick Search Categories */}
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          <span className="text-sm text-gray-500 mr-2">Popular:</span>
-          {['Graphics Cards', 'Gaming Laptops', 'RAM', 'SSD', 'Monitors'].map((category, index) => (
-            <button
-              key={index}
-              onClick={() => handleSuggestionClick(category)}
-              className="text-sm px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full transition-colors duration-200"
-            >
-              {category}
-            </button>
-          ))}
-        </div>
       </div>
     </div>
   )

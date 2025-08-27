@@ -3,70 +3,210 @@ import { Link } from 'react-router-dom'
 
 const Hero = () => {
   return (
-    <section className="bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900 py-8 md:py-10">
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          
-          {/* Content Section */}
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight">
-                Your Trusted
-                <span className="block text-cyan-600">Computer Solutions</span>
-                <span className="block">Partner</span>
-              </h1>
+    <section className="relative bg-gradient-to-br from-gray-50 via-blue-50 to-cyan-50 text-gray-900 py-8 md:py-12 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/5 via-blue-600/5 to-purple-600/5"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-cyan-400/10 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-400/10 to-transparent rounded-full blur-3xl"></div>
+      
+      <div className="relative w-full px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Mobile Layout */}
+          <div className="lg:hidden space-y-4">
+            {/* Header */}
+            <div className="text-center space-y-3">
               
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                From cutting-edge hardware to innovative software solutions, 
-                Jainx Computers delivers professional technology services that power your success.
-              </p>
+              <h1 className="text-2xl md:text-3xl font-black leading-tight">
+                Build Your Dream
+                <span className="block bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Gaming Setup
+                </span>
+              </h1>
             </div>
 
-            {/* Features */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              <div className="flex items-center justify-center space-x-2">
-                <div className="bg-cyan-500 p-1.5 rounded-lg">
-                  <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            {/* Image */}
+            <div className="relative flex justify-center">
+              <div className="relative max-w-xs w-full">
+                <div className="relative bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl p-4 shadow-xl border border-gray-200 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent rounded-2xl"></div>
+                  
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20 blur-xl"></div>
+                  
+                  <img 
+                    src="/custom pc.webp" 
+                    alt="Custom Gaming PC Setup" 
+                    className="w-full h-auto object-contain relative z-20 max-h-48 mx-auto drop-shadow-xl"
+                  />
+                </div>
+
+                <div className="absolute -top-4 -left-4 w-16 h-16 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-full blur-2xl animate-pulse"></div>
+                <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-r from-blue-400/30 to-purple-500/30 rounded-full blur-2xl animate-pulse delay-1000"></div>
+              </div>
+            </div>
+
+            {/* Features in one line */}
+            <div className="flex justify-center space-x-6">
+              <div className="flex flex-col items-center space-y-1">
+                <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-lg flex items-center justify-center shadow-md">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="text-gray-700 font-medium text-sm">Quality Assured</span>
+                <div className="text-center">
+                  <h3 className="font-bold text-gray-900 text-xs">Quality</h3>
+                </div>
               </div>
               
-              <div className="flex items-center justify-center space-x-2">
-                <div className="bg-cyan-500 p-1.5 rounded-lg">
-                  <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <div className="flex flex-col items-center space-y-1">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center shadow-md">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="text-gray-700 font-medium text-sm">24/7 Support</span>
+                <div className="text-center">
+                  <h3 className="font-bold text-gray-900 text-xs">24/7 Support</h3>
+                </div>
               </div>
               
-              <div className="flex items-center justify-center space-x-2">
-                <div className="bg-cyan-500 p-1.5 rounded-lg">
-                  <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <div className="flex flex-col items-center space-y-1">
+                <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center shadow-md">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
                   </svg>
                 </div>
-                <span className="text-gray-700 font-medium text-sm">Expert Team</span>
+                <div className="text-center">
+                  <h3 className="font-bold text-gray-900 text-xs">Expert Team</h3>
+                </div>
               </div>
             </div>
 
             {/* Call to Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col gap-3 justify-center">
               <Link 
-                to="/contact" 
-                className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 text-center cursor-pointer shadow-lg hover:shadow-xl"
+                to="/pc-build" 
+                className="group bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center cursor-pointer flex items-center justify-center"
               >
-                Get Started Today
+                <span className="mr-2">🚀</span>
+                Build Your PC Now
+                <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
               </Link>
               
               <Link 
                 to="/pc-parts" 
-                className="border border-cyan-500 text-cyan-600 hover:bg-cyan-500 hover:text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 text-center cursor-pointer"
+                className="group bg-white text-gray-700 font-semibold py-3 px-6 rounded-xl border-2 border-gray-200 hover:border-cyan-300 hover:bg-cyan-50 transition-all duration-300 text-center cursor-pointer flex items-center justify-center"
               >
+                <span className="mr-2">🛒</span>
                 Browse PC Parts
               </Link>
+            </div>
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden lg:grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            
+            {/* Left Content */}
+            <div className="space-y-6 text-center lg:text-left">
+              <div className="space-y-3">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight">
+                  Build Your Dream
+                  <span className="block bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Gaming Setup
+                  </span>
+                </h1>
+                
+                <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                  From custom PC builds to premium gaming accessories, we deliver cutting-edge technology solutions.
+                </p>
+              </div>
+
+              {/* Features */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="flex flex-col items-center lg:items-start space-y-2">
+                  <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <h3 className="font-bold text-gray-900 text-sm">Quality Assured</h3>
+                    <p className="text-gray-600 text-xs">Premium components only</p>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col items-center lg:items-start space-y-2">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <h3 className="font-bold text-gray-900 text-sm">24/7 Support</h3>
+                    <p className="text-gray-600 text-xs">Always here to help</p>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col items-center lg:items-start space-y-2">
+                  <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+                    </svg>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <h3 className="font-bold text-gray-900 text-sm">Expert Team</h3>
+                    <p className="text-gray-600 text-xs">Professional guidance</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Call to Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                <Link 
+                  to="/pc-build" 
+                  className="group bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center cursor-pointer flex items-center justify-center"
+                >
+                  <span className="mr-2">🚀</span>
+                  Build Your PC Now
+                  <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </Link>
+                
+                <Link 
+                  to="/pc-parts" 
+                  className="group bg-white text-gray-700 font-semibold py-3 px-6 rounded-xl border-2 border-gray-200 hover:border-cyan-300 hover:bg-cyan-50 transition-all duration-300 text-center cursor-pointer flex items-center justify-center"
+                >
+                  <span className="mr-2">🛒</span>
+                  Browse PC Parts
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Image Section */}
+            <div className="relative flex justify-center lg:justify-end">
+              <div className="relative max-w-md w-full">
+                {/* Main PC Image Container */}
+                <div className="relative bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl p-6 shadow-xl border border-gray-200 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent rounded-2xl"></div>
+                  
+                  {/* Glowing border effect */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20 blur-xl"></div>
+                  
+                  <img 
+                    src="/custom pc.webp" 
+                    alt="Custom Gaming PC Setup" 
+                    className="w-full h-auto object-contain relative z-20 max-h-64 mx-auto drop-shadow-xl transition-all duration-700 hover:scale-105 hover:drop-shadow-[0_15px_35px_rgba(0,0,0,0.25)]"
+                  />
+
+                </div>
+
+                {/* Enhanced Animated Background Elements */}
+                <div className="absolute -top-6 -left-6 w-24 h-24 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-full blur-2xl animate-pulse"></div>
+                <div className="absolute -bottom-6 -right-6 w-28 h-28 bg-gradient-to-r from-blue-400/30 to-purple-500/30 rounded-full blur-2xl animate-pulse delay-1000"></div>
+              </div>
             </div>
           </div>
         </div>
