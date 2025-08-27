@@ -11,7 +11,7 @@ const Pcparts = () => {
       ),
       features: ["Gaming Monitors", "4K Displays", "Ultrawide Screens", "Professional Monitors"],
       priceRange: "₹8,999 - ₹85,999",
-      link: "/monitors",
+      link: "/pc-parts/monitors",
       gradient: "from-blue-500 to-purple-600",
       hoverColor: "hover:border-blue-400"
     },
@@ -23,7 +23,7 @@ const Pcparts = () => {
       ),
       features: ["ATX Motherboards", "Micro-ATX", "Mini-ITX", "Gaming Boards"],
       priceRange: "₹4,999 - ₹35,999",
-      link: "/motherboards",
+      link: "/pc-parts/motherboards",
       gradient: "from-green-500 to-teal-600",
       hoverColor: "hover:border-green-400"
     },
@@ -35,7 +35,7 @@ const Pcparts = () => {
       ),
       features: ["Intel Core Series", "AMD Ryzen", "Gaming CPUs", "Workstation CPUs"],
       priceRange: "₹6,999 - ₹89,999",
-      link: "/processors",
+      link: "/pc-parts/processors",
       gradient: "from-red-500 to-pink-600",
       hoverColor: "hover:border-red-400"
     },
@@ -47,7 +47,7 @@ const Pcparts = () => {
       ),
       features: ["DDR4 Memory", "DDR5 Memory", "Gaming RAM", "RGB Memory"],
       priceRange: "₹2,999 - ₹25,999",
-      link: "/memory",
+      link: "/pc-parts/memory",
       gradient: "from-yellow-500 to-orange-600",
       hoverColor: "hover:border-yellow-400"
     },
@@ -59,7 +59,7 @@ const Pcparts = () => {
       ),
       features: ["High Performance", "Gaming Ready", "4K Support", "Ray Tracing"],
       priceRange: "₹12,999 - ₹1,99,999",
-      link: "/graphics-cards",
+      link: "/pc-parts/graphics-card",
       gradient: "from-purple-500 to-indigo-600",
       hoverColor: "hover:border-purple-400"
     },
@@ -71,7 +71,7 @@ const Pcparts = () => {
       ),
       features: ["NVMe SSDs", "SATA SSDs", "Gaming SSDs", "High-Capacity Drives"],
       priceRange: "₹3,499 - ₹45,999",
-      link: "/storage",
+      link: "/pc-parts/storage",
       gradient: "from-cyan-500 to-blue-600",
       hoverColor: "hover:border-cyan-400"
     }

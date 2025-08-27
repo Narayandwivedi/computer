@@ -21,7 +21,7 @@ const Pcbuild = () => {
           
           {/* Custom Build Card */}
           <Link
-            to="/custom-build"
+            to="/pc-build/custom-build"
             className="bg-white rounded-xl p-6 shadow-xl border border-gray-200 hover:border-cyan-400 transition-all duration-300 transform hover:scale-105 cursor-pointer block"
           >
             <div className="mb-6">

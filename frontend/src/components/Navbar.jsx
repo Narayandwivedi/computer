@@ -37,7 +37,7 @@ const Navbar = () => {
                 to="/gaming-laptop" 
                 className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
               >
-                Gaming Laptop
+                Laptop
               </Link>
               <Link 
                 to="/pc-parts" 
@@ -46,10 +46,10 @@ const Navbar = () => {
                 PC Parts
               </Link>
               <Link 
-                to="/gaming-accessories" 
+                to="/computer-accessories" 
                 className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
               >
-                Gaming Accessories
+                Computer Accessories
               </Link>
               <Link 
                 to="/contact" 
@@ -106,7 +106,7 @@ const Navbar = () => {
                 className="text-white hover:text-cyan-300 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
                 onClick={() => setIsOpen(false)}
               >
-                Gaming Laptop
+                Laptop
               </Link>
               <Link
                 to="/pc-parts"
@@ -116,11 +116,11 @@ const Navbar = () => {
                 PC Parts
               </Link>
               <Link
-                to="/gaming-accessories"
+                to="/computer-accessories"
                 className="text-white hover:text-cyan-300 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
                 onClick={() => setIsOpen(false)}
               >
-                Gaming Accessories
+                Computer Accessories
               </Link>
               <Link
                 to="/contact"
