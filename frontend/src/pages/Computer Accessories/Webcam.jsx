@@ -156,7 +156,7 @@ const Webcam = () => {
                   {product.images && product.images.length > 0 ? (
                     <img
                       src={product.images[0]}
-                      alt={product.name}
+                      alt={product.seoTitle || product.name}
                       className="max-h-full max-w-full object-contain"
                     />
                   ) : (
@@ -171,7 +171,7 @@ const Webcam = () => {
                 {/* Product Info */}
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                    {product.name}
+                    {product.seoTitle || product.name}
                   </h3>
                   
                   <p className="text-sm text-gray-600 mb-2">

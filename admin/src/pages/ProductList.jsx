@@ -100,7 +100,7 @@ const ProductList = () => {
                             <img
                               className="h-16 w-16 object-cover rounded-md"
                               src={product.images[0]}
-                              alt={product.name}
+                              alt={product.seoTitle || product.name}
                               onError={(e) => {
                                 e.target.src = 'https://via.placeholder.com/64x64?text=No+Image';
                               }}
@@ -113,7 +113,7 @@ const ProductList = () => {
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {product.name}
+                            {product.seoTitle || product.name}
                           </div>
                           <div className="text-sm text-gray-500">
                             {product.brand}

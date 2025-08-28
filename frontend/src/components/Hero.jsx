@@ -12,10 +12,9 @@ const Hero = () => {
       <div className="relative w-full px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Mobile Layout */}
-          <div className="lg:hidden space-y-3">
+          <div className="lg:hidden space-y-4">
             {/* Header */}
-            <div className="text-center space-y-2">
-              
+            <div className="text-center space-y-3">
               <h1 className="text-2xl md:text-3xl font-black leading-tight">
                 Build Your Dream
                 <span className="block bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -24,10 +23,37 @@ const Hero = () => {
               </h1>
             </div>
 
+            {/* Features */}
+            <div className="grid grid-cols-2 gap-3 px-4 mb-4">
+              <div className="flex flex-col items-center space-y-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="text-center">
+                  <h3 className="font-bold text-gray-900 text-xs">Quality Assured</h3>
+                  <p className="text-gray-600 text-xs">Premium components</p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col items-center space-y-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="text-center">
+                  <h3 className="font-bold text-gray-900 text-xs">24/7 Support</h3>
+                  <p className="text-gray-600 text-xs">Always here</p>
+                </div>
+              </div>
+            </div>
+
             {/* Image */}
             <div className="relative flex justify-center">
               <div className="relative max-w-xs w-full">
-                <div className="relative bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-xl p-3 shadow-lg border border-gray-200 overflow-hidden">
+                <div className="relative bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-xl p-4 shadow-lg border border-gray-200 overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-xl"></div>
                   <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent rounded-xl"></div>
                   
@@ -36,56 +62,22 @@ const Hero = () => {
                   <img 
                     src="/custom pc.webp" 
                     alt="Custom Gaming PC Setup" 
-                    className="w-full h-auto object-contain relative z-20 max-h-36 mx-auto drop-shadow-lg"
+                    className="w-full h-auto object-contain relative z-20 max-h-40 mx-auto drop-shadow-lg"
                   />
+
                 </div>
 
-                <div className="absolute -top-3 -left-3 w-12 h-12 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-full blur-xl animate-pulse"></div>
-                <div className="absolute -bottom-3 -right-3 w-16 h-16 bg-gradient-to-r from-blue-400/30 to-purple-500/30 rounded-full blur-xl animate-pulse delay-1000"></div>
-              </div>
-            </div>
-
-            {/* Features in one line */}
-            <div className="flex justify-center space-x-5">
-              <div className="flex flex-col items-center space-y-1">
-                <div className="w-7 h-7 bg-gradient-to-r from-green-400 to-emerald-500 rounded-lg flex items-center justify-center shadow-md">
-                  <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div className="text-center">
-                  <h3 className="font-bold text-gray-900 text-xs">Quality</h3>
-                </div>
-              </div>
-              
-              <div className="flex flex-col items-center space-y-1">
-                <div className="w-7 h-7 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center shadow-md">
-                  <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div className="text-center">
-                  <h3 className="font-bold text-gray-900 text-xs">24/7 Support</h3>
-                </div>
-              </div>
-              
-              <div className="flex flex-col items-center space-y-1">
-                <div className="w-7 h-7 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center shadow-md">
-                  <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
-                  </svg>
-                </div>
-                <div className="text-center">
-                  <h3 className="font-bold text-gray-900 text-xs">Expert Team</h3>
-                </div>
+                {/* Background orbs */}
+                <div className="absolute -top-6 -left-6 w-12 h-12 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 rounded-full blur-xl animate-pulse"></div>
+                <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-gradient-to-r from-blue-400/20 to-purple-500/20 rounded-full blur-xl animate-pulse delay-1000"></div>
               </div>
             </div>
 
             {/* Call to Action Buttons */}
-            <div className="flex flex-col gap-2.5 justify-center pb-2">
+            <div className="flex flex-col gap-3 justify-center pb-4 px-4">
               <Link 
                 to="/pc-build" 
-                className="group bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold py-2.5 px-5 rounded-xl hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center cursor-pointer flex items-center justify-center"
+                className="group bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center cursor-pointer flex items-center justify-center"
               >
                 <span className="mr-2">🚀</span>
                 Build Your PC Now
@@ -96,7 +88,7 @@ const Hero = () => {
               
               <Link 
                 to="/pc-parts" 
-                className="group bg-white text-gray-700 font-semibold py-2.5 px-5 rounded-xl border-2 border-gray-200 hover:border-cyan-300 hover:bg-cyan-50 transition-all duration-300 text-center cursor-pointer flex items-center justify-center"
+                className="group bg-white text-gray-700 font-semibold py-3 px-6 rounded-xl border-2 border-gray-200 hover:border-cyan-300 hover:bg-cyan-50 transition-all duration-300 text-center cursor-pointer flex items-center justify-center"
               >
                 <span className="mr-2">🛒</span>
                 Browse PC Parts

@@ -63,9 +63,11 @@ const ProductDetail = () => {
       'motherboards': '/pc-parts/motherboards',
       'storage': '/pc-parts/storage',
       'monitors': '/pc-parts/monitors',
-      'keyboard': '/pc-parts/keyboard',
-      'mouse': '/pc-parts/mouse',
-      'headset': '/pc-parts/headset'
+      'keyboard': '/computer-accessories/keyboard',
+      'mouse': '/computer-accessories/mouse',
+      'headset': '/computer-accessories/headset',
+      'gaming-laptop': '/laptops',
+      'office-laptop': '/laptops'
     }
     return subcategoryMap[subCategory] || '/pc-parts'
   }
@@ -80,7 +82,9 @@ const ProductDetail = () => {
       'monitors': 'Monitors',
       'keyboard': 'Keyboards',
       'mouse': 'Mouse',
-      'headset': 'Headsets'
+      'headset': 'Headsets',
+      'gaming-laptop': 'Gaming Laptops',
+      'office-laptop': 'Office Laptops'
     }
     return displayNames[subCategory] || subCategory
   }
@@ -133,21 +137,26 @@ const ProductDetail = () => {
             </li>
             <li>/</li>
             <li>
-              <button onClick={() => navigate('/pc-parts')} className="hover:text-cyan-600">
-                PC Parts
-              </button>
-            </li>
-            <li>/</li>
-            <li>
               <button 
-                onClick={() => navigate(getSubcategoryUrl(product.subCategory))} 
+                onClick={() => navigate(product.category === 'laptops' ? '/laptops' : '/pc-parts')} 
                 className="hover:text-cyan-600"
               >
-                {getSubcategoryDisplayName(product.subCategory)}
+                {product.category === 'laptops' ? 'Laptops' : 'PC Parts'}
               </button>
             </li>
-            <li>/</li>
-            <li className="text-gray-900 font-medium">{product.name}</li>
+            {product.category !== 'laptops' && (
+              <>
+                <li>/</li>
+                <li>
+                  <button 
+                    onClick={() => navigate(getSubcategoryUrl(product.subCategory))} 
+                    className="hover:text-cyan-600"
+                  >
+                    {getSubcategoryDisplayName(product.subCategory)}
+                  </button>
+                </li>
+              </>
+            )}
           </ol>
         </nav>
 
@@ -158,7 +167,7 @@ const ProductDetail = () => {
               {product.images && product.images.length > 0 ? (
                 <img
                   src={product.images[selectedImage]}
-                  alt={product.name}
+                  alt={product.seoTitle || product.name}
                   className="w-full h-full object-contain p-8"
                 />
               ) : (
@@ -183,7 +192,7 @@ const ProductDetail = () => {
                   >
                     <img
                       src={image}
-                      alt={`${product.name} ${index + 1}`}
+                      alt={`${product.seoTitle || product.name} ${index + 1}`}
                       className="w-full h-full object-contain p-2"
                     />
                   </button>
@@ -195,8 +204,8 @@ const ProductDetail = () => {
           {/* Product Info */}
           <div className="space-y-6">
             <div>
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                {product.name}
+              <h1 className="text-2xl lg:text-3xl font-semibold text-gray-900 mb-4">
+                {product.seoTitle || product.name}
               </h1>
               
               <div className="flex items-center space-x-4 mb-6">

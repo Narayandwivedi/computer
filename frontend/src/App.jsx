@@ -25,6 +25,7 @@ import Webcam from './pages/Computer Accessories/Webcam'
 import GamingChair from './pages/Computer Accessories/GamingChair'
 import LaptopBag from './pages/Computer Accessories/LaptopBag'
 import CustomPcBuild from './pages/CustomPcBuild'
+import Laptops from './pages/Laptops'
 
 const AppContent = () => {
   const location = useLocation()
@@ -42,6 +43,7 @@ const AppContent = () => {
         <Route path="/pc-build/custom-build" element={<CustomPcBuild />} />
         <Route path="/pc-parts" element={<Pcparts />} />
         <Route path="/computer-accessories" element={<ComputerAccessories />} />
+        <Route path="/laptops" element={<Laptops />} />
         <Route path="/pc-parts/graphics-card" element={<GraphicsCard />} />
         <Route path="/pc-parts/processors" element={<Processor />} />
         <Route path="/pc-parts/memory" element={<Memory />} />
@@ -72,6 +74,10 @@ const AppContent = () => {
         <Route path="/computer-accessories/webcam/product/:id" element={<ProductDetail />} />
         <Route path="/computer-accessories/gaming-chair/product/:id" element={<ProductDetail />} />
         <Route path="/computer-accessories/laptop-bag/product/:id" element={<ProductDetail />} />
+        
+        {/* Laptop routes */}
+        <Route path="/laptops/gaming-laptop/product/:id" element={<ProductDetail />} />
+        <Route path="/laptops/office-laptop/product/:id" element={<ProductDetail />} />
         
         {/* Legacy redirects for backward compatibility */}
         <Route path="/graphics-cards" element={<GraphicsCard />} />

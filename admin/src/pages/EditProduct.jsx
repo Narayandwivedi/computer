@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAdmin } from '../context/AdminContext';
-import { getCategoriesArray, SUBCATEGORIES } from '../constants/categories';
+import { getCategoriesArray, getSubcategoriesForCategory } from '../constants/categories';
 import { getSpecificationTemplate, COMMON_FEATURES } from '../constants/specificationTemplates';
+import { generateSEOTitle, generateTitlePreview } from '../constants/titleGenerator';
 import ImageUpload from '../components/ImageUpload';
 
 const EditProduct = () => {
@@ -12,7 +13,7 @@ const EditProduct = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [formData, setFormData] = useState({
-    name: '',
+    seoTitle: '', // Main product title (auto-generated)
     slug: '',
     description: '',
     category: '',
@@ -36,6 +37,13 @@ const EditProduct = () => {
     metaDescription: '',
     keywords: [],
     warranty: 1,
+    serviceOptions: {
+      freeDelivery: true,
+      replacementDays: 7,
+      cashOnDelivery: true,
+      warrantyService: true,
+      freeInstallation: false
+    },
     isActive: true,
     isFeatured: false
   });
@@ -43,6 +51,9 @@ const EditProduct = () => {
   const [specificationFields, setSpecificationFields] = useState({});
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [customFeature, setCustomFeature] = useState('');
+  const [manualSpecs, setManualSpecs] = useState({});
+  const [manualSpecKey, setManualSpecKey] = useState('');
+  const [manualSpecValue, setManualSpecValue] = useState('');
 
   const categories = getCategoriesArray();
 
@@ -51,8 +62,8 @@ const EditProduct = () => {
       try {
         const response = await productAPI.getById(id);
         const product = response.data.data;
-        setFormData({
-          name: product.name || '',
+        const productData = {
+          seoTitle: product.seoTitle || product.name || '', // Fallback to old name if exists
           slug: product.slug || '',
           description: product.description || '',
           category: product.category || '',
@@ -76,13 +87,39 @@ const EditProduct = () => {
           metaDescription: product.metaDescription || '',
           keywords: product.keywords || [],
           warranty: product.warranty !== undefined ? product.warranty : 1,
+          serviceOptions: {
+            freeDelivery: product.serviceOptions?.freeDelivery !== undefined ? product.serviceOptions.freeDelivery : true,
+            replacementDays: product.serviceOptions?.replacementDays !== undefined ? product.serviceOptions.replacementDays : 7,
+            cashOnDelivery: product.serviceOptions?.cashOnDelivery !== undefined ? product.serviceOptions.cashOnDelivery : true,
+            warrantyService: product.serviceOptions?.warrantyService !== undefined ? product.serviceOptions.warrantyService : true,
+            freeInstallation: product.serviceOptions?.freeInstallation !== undefined ? product.serviceOptions.freeInstallation : false
+          },
           isActive: product.isActive !== undefined ? product.isActive : true,
           isFeatured: product.isFeatured !== undefined ? product.isFeatured : false
-        });
+        };
+        
+        // Generate SEO title if it doesn't exist
+        if (!productData.seoTitle) {
+          productData.seoTitle = generateSEOTitle(productData);
+        }
+        
+        setFormData(productData);
         
         // Set specification fields and selected features
         setSpecificationFields(product.specifications || {});
         setSelectedFeatures(product.features || []);
+        
+        // Set manual specifications (any specs not in the template)
+        const templateSpecs = getSpecificationTemplate(product.subCategory || '').map(spec => spec.key);
+        const manualSpecifications = {};
+        if (product.specifications) {
+          Object.entries(product.specifications).forEach(([key, value]) => {
+            if (!templateSpecs.includes(key)) {
+              manualSpecifications[key] = value;
+            }
+          });
+        }
+        setManualSpecs(manualSpecifications);
       } catch (error) {
         alert('Error fetching product: ' + handleApiError(error));
         navigate('/');
@@ -101,6 +138,16 @@ const EditProduct = () => {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
+  };
+
+  const handleServiceOptionChange = (optionName, value) => {
+    setFormData(prev => ({
+      ...prev,
+      serviceOptions: {
+        ...prev.serviceOptions,
+        [optionName]: value
+      }
+    }));
   };
 
   const handleChange = (e) => {
@@ -211,6 +258,62 @@ const EditProduct = () => {
     }
   };
 
+  const handleAddManualSpec = () => {
+    if (manualSpecKey.trim() && manualSpecValue.trim()) {
+      const key = manualSpecKey.trim();
+      const value = manualSpecValue.trim();
+      
+      setManualSpecs(prev => ({
+        ...prev,
+        [key]: value
+      }));
+      
+      // Also add to formData specifications
+      setFormData(prev => {
+        const newData = {
+          ...prev,
+          specifications: {
+            ...prev.specifications,
+            [key]: value
+          }
+        };
+        
+        // Auto-update SEO title when manual specs change
+        newData.seoTitle = generateSEOTitle(newData);
+        
+        return newData;
+      });
+      
+      // Clear inputs
+      setManualSpecKey('');
+      setManualSpecValue('');
+    }
+  };
+
+  const handleRemoveManualSpec = (key) => {
+    setManualSpecs(prev => {
+      const newSpecs = { ...prev };
+      delete newSpecs[key];
+      return newSpecs;
+    });
+    
+    // Also remove from formData specifications
+    setFormData(prev => {
+      const newSpecs = { ...prev.specifications };
+      delete newSpecs[key];
+      
+      const newData = {
+        ...prev,
+        specifications: newSpecs
+      };
+      
+      // Auto-update SEO title when manual specs change
+      newData.seoTitle = generateSEOTitle(newData);
+      
+      return newData;
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -243,16 +346,20 @@ const EditProduct = () => {
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Product Name *
+            Product Title * (Auto-Generated - You can edit)
           </label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
+          <textarea
+            name="seoTitle"
+            value={formData.seoTitle}
             onChange={handleChange}
             required
+            rows={3}
+            placeholder="Professional product title..."
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          <div className="text-xs text-gray-500 mt-1">
+            Professional Amazon-style title. You can edit it manually.
+          </div>
         </div>
 
         <div className="mb-4">
@@ -299,7 +406,7 @@ const EditProduct = () => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select Sub Category</option>
-              {SUBCATEGORIES.map(subcat => (
+              {getSubcategoriesForCategory(formData.category).map(subcat => (
                 <option key={subcat.value} value={subcat.value}>{subcat.label}</option>
               ))}
             </select>
@@ -491,6 +598,64 @@ const EditProduct = () => {
           </div>
         )}
 
+        {/* Manual Specifications */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Manual Specifications</h3>
+          <p className="text-sm text-gray-600 mb-4">Add any custom specifications not covered above</p>
+          
+          {/* Manual Spec Input */}
+          <div className="bg-gray-50 p-4 rounded-lg mb-4">
+            <div className="flex gap-2 mb-3">
+              <input
+                type="text"
+                value={manualSpecKey}
+                onChange={(e) => setManualSpecKey(e.target.value)}
+                placeholder="Specification Name (e.g., Operating System)"
+                className="flex-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="text"
+                value={manualSpecValue}
+                onChange={(e) => setManualSpecValue(e.target.value)}
+                placeholder="Specification Value (e.g., Windows 11 Home)"
+                className="flex-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={handleAddManualSpec}
+                disabled={!manualSpecKey.trim() || !manualSpecValue.trim()}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                Add Spec
+              </button>
+            </div>
+          </div>
+
+          {/* Display Added Manual Specs */}
+          {Object.keys(manualSpecs).length > 0 && (
+            <div className="border border-gray-200 rounded-lg p-4">
+              <h4 className="text-md font-medium text-gray-900 mb-3">Added Manual Specifications</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {Object.entries(manualSpecs).map(([key, value]) => (
+                  <div key={key} className="flex items-center justify-between bg-white p-3 border border-gray-200 rounded-md">
+                    <div className="flex-1">
+                      <span className="font-medium text-gray-700">{key}:</span>
+                      <span className="ml-2 text-gray-600">{value}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveManualSpec(key)}
+                      className="ml-2 text-red-600 hover:text-red-800 transition-colors"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Features Selection */}
         {formData.subCategory && COMMON_FEATURES[formData.subCategory] && (
           <div className="mb-6">
@@ -571,17 +736,17 @@ const EditProduct = () => {
         {/* SEO Fields */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">SEO Information</h3>
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Meta Title (60 characters max)
               </label>
-              <input
-                type="text"
+              <textarea
                 name="metaTitle"
                 value={formData.metaTitle}
                 onChange={handleChange}
                 maxLength={60}
+                rows={3}
                 placeholder="SEO optimized title for search results"
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -631,6 +796,91 @@ const EditProduct = () => {
               />
               <div className="text-xs text-gray-500 mt-1">
                 Enter warranty period in years (e.g., 1, 2, 3 or 0.5 for 6 months)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Service Options */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Service Options</h3>
+          <div className="bg-gray-50 rounded-xl p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Free Delivery */}
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.serviceOptions.freeDelivery}
+                  onChange={(e) => handleServiceOptionChange('freeDelivery', e.target.checked)}
+                  className="h-5 w-5 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                />
+                <div className="flex items-center space-x-2">
+                  <span className="text-green-600">🚚</span>
+                  <span className="text-sm font-medium text-gray-900">Free Delivery</span>
+                </div>
+              </label>
+
+              {/* Cash on Delivery */}
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.serviceOptions.cashOnDelivery}
+                  onChange={(e) => handleServiceOptionChange('cashOnDelivery', e.target.checked)}
+                  className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <div className="flex items-center space-x-2">
+                  <span className="text-blue-600">💵</span>
+                  <span className="text-sm font-medium text-gray-900">Cash on Delivery</span>
+                </div>
+              </label>
+
+              {/* Warranty Service */}
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.serviceOptions.warrantyService}
+                  onChange={(e) => handleServiceOptionChange('warrantyService', e.target.checked)}
+                  className="h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                />
+                <div className="flex items-center space-x-2">
+                  <span className="text-purple-600">🛡️</span>
+                  <span className="text-sm font-medium text-gray-900">Warranty Service</span>
+                </div>
+              </label>
+
+              {/* Free Installation */}
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.serviceOptions.freeInstallation}
+                  onChange={(e) => handleServiceOptionChange('freeInstallation', e.target.checked)}
+                  className="h-5 w-5 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+                />
+                <div className="flex items-center space-x-2">
+                  <span className="text-orange-600">🔧</span>
+                  <span className="text-sm font-medium text-gray-900">Free Installation</span>
+                </div>
+              </label>
+
+              {/* Replacement Days */}
+              <div className="lg:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <span className="text-red-600">🔄</span> Replacement Period
+                </label>
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="number"
+                    value={formData.serviceOptions.replacementDays}
+                    onChange={(e) => handleServiceOptionChange('replacementDays', parseInt(e.target.value) || 0)}
+                    min="0"
+                    max="90"
+                    className="w-20 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-600">days replacement policy</span>
+                </div>
+                <div className="text-xs text-gray-500 mt-1">
+                  Common: 7, 10, 15, or 30 days
+                </div>
               </div>
             </div>
           </div>

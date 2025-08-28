@@ -2,34 +2,65 @@ const Product = require('../models/Product');
 
 const addProduct = async (req, res) => {
   try {
+    console.log('Received request body:', req.body); // Debug log
     const {
-      name,
+      seoTitle,
+      slug,
       description,
       category,
       subCategory,
       brand,
+      model,
+      sku,
       price,
       originalPrice,
       weight,
       dimensions,
       stockQuantity,
       images,
-      isActive
+      specifications,
+      features,
+      metaTitle,
+      metaDescription,
+      keywords,
+      warranty,
+      isActive,
+      isFeatured
     } = req.body;
 
+    // Validate required fields
+    if (!seoTitle || seoTitle.trim() === '') {
+      return res.status(400).json({
+        success: false,
+        message: 'Product title (seoTitle) is required'
+      });
+    }
+
+    console.log('Creating product with seoTitle:', seoTitle); // Debug log
+
     const product = new Product({
-      name,
+      seoTitle,
+      slug,
       description,
       category,
       subCategory,
       brand,
+      model,
+      sku,
       price,
       originalPrice,
       weight,
       dimensions,
       stockQuantity,
       images,
-      isActive: isActive !== undefined ? isActive : true
+      specifications,
+      features,
+      metaTitle,
+      metaDescription,
+      keywords,
+      warranty: warranty !== undefined ? warranty : 1,
+      isActive: isActive !== undefined ? isActive : true,
+      isFeatured: isFeatured !== undefined ? isFeatured : false
     });
 
     const savedProduct = await product.save();
@@ -80,7 +111,18 @@ const editProduct = async (req, res) => {
 const getProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findById(id);
+    let product;
+
+    // First try to find by slug, then by ObjectId
+    product = await Product.findOne({ slug: id });
+    
+    // If not found by slug and the id looks like a valid ObjectId, try findById
+    if (!product) {
+      // Check if the id is a valid ObjectId format (24 hex characters)
+      if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        product = await Product.findById(id);
+      }
+    }
 
     if (!product) {
       return res.status(404).json({

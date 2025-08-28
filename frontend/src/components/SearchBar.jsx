@@ -83,20 +83,25 @@ const SearchBar = () => {
             </div>
             <input
               type="text"
-              placeholder="Search for PC parts, laptops, accessories..."
+              placeholder="Search PC parts, laptops..."
               value={searchQuery}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               onFocus={handleFocus}
               onBlur={handleBlur}
-              className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none text-gray-900 placeholder-gray-500"
+              className="w-full pl-10 pr-16 sm:pr-20 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none text-gray-900 placeholder-gray-500 text-sm sm:text-base"
             />
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+            <div className="absolute inset-y-0 right-0 pr-2 sm:pr-3 flex items-center">
               <button
                 onClick={() => handleSearch()}
-                className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition-colors duration-200"
+                className="bg-cyan-500 hover:bg-cyan-600 text-white px-2 sm:px-4 py-2 rounded-md transition-colors duration-200 flex items-center justify-center"
               >
-                Search
+                {/* Mobile: Show only search icon */}
+                <svg className="w-4 h-4 sm:hidden" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                </svg>
+                {/* Desktop: Show text */}
+                <span className="hidden sm:inline">Search</span>
               </button>
             </div>
           </div>

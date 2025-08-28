@@ -86,6 +86,73 @@ export const SPECIFICATION_TEMPLATES = {
     { key: 'Connectivity', label: 'Connectivity', required: false, placeholder: 'e.g., DisplayPort 1.4, HDMI 2.0' },
     { key: 'USB Hub', label: 'USB Hub', required: false, placeholder: 'e.g., 2x USB 3.0' },
     { key: 'Adjustments', label: 'Adjustments', required: false, placeholder: 'e.g., Height, Tilt, Swivel, Pivot' }
+  ],
+  
+  // Gaming Accessories
+  'mouse': [
+    { key: 'DPI', label: 'DPI', required: true, placeholder: 'e.g., 25,600 DPI' },
+    { key: 'Sensor', label: 'Sensor', required: true, placeholder: 'e.g., HERO 25K Optical' },
+    { key: 'Connectivity', label: 'Connectivity', required: true, placeholder: 'e.g., Wireless/Wired' },
+    { key: 'Battery Life', label: 'Battery Life', required: false, placeholder: 'e.g., 60 hours' },
+    { key: 'Buttons', label: 'Programmable Buttons', required: false, placeholder: 'e.g., 11 buttons' },
+    { key: 'Weight', label: 'Weight', required: false, placeholder: 'e.g., 121g' },
+    { key: 'Ergonomics', label: 'Ergonomics', required: false, placeholder: 'e.g., Right-handed' },
+    { key: 'RGB Zones', label: 'RGB Zones', required: false, placeholder: 'e.g., 16.8M colors' }
+  ],
+  
+  'keyboard': [
+    { key: 'Switch Type', label: 'Switch Type', required: true, placeholder: 'e.g., Mechanical Cherry MX Red' },
+    { key: 'Layout', label: 'Layout', required: true, placeholder: 'e.g., Full-size, TKL, 60%' },
+    { key: 'Connectivity', label: 'Connectivity', required: true, placeholder: 'e.g., USB-C Wired' },
+    { key: 'Keycaps', label: 'Keycaps', required: false, placeholder: 'e.g., Double-shot PBT' },
+    { key: 'Backlighting', label: 'Backlighting', required: false, placeholder: 'e.g., Per-key RGB' },
+    { key: 'Anti-ghosting', label: 'Anti-ghosting', required: false, placeholder: 'e.g., N-Key Rollover' },
+    { key: 'Media Keys', label: 'Media Keys', required: false, placeholder: 'e.g., Dedicated volume wheel' },
+    { key: 'Build Material', label: 'Build Material', required: false, placeholder: 'e.g., Aluminum frame' }
+  ],
+  
+  'headset': [
+    { key: 'Driver Size', label: 'Driver Size', required: true, placeholder: 'e.g., 50mm drivers' },
+    { key: 'Frequency Response', label: 'Frequency Response', required: true, placeholder: 'e.g., 20Hz - 20kHz' },
+    { key: 'Connectivity', label: 'Connectivity', required: true, placeholder: 'e.g., Wireless 2.4GHz + Bluetooth' },
+    { key: 'Microphone', label: 'Microphone', required: false, placeholder: 'e.g., Detachable boom mic' },
+    { key: 'Battery Life', label: 'Battery Life', required: false, placeholder: 'e.g., 20 hours' },
+    { key: 'Surround Sound', label: 'Surround Sound', required: false, placeholder: 'e.g., 7.1 Virtual Surround' },
+    { key: 'Noise Cancellation', label: 'Noise Cancellation', required: false, placeholder: 'e.g., Active Noise Cancellation' },
+    { key: 'Compatibility', label: 'Compatibility', required: false, placeholder: 'e.g., PC, PS5, Xbox, Mobile' }
+  ],
+  
+  // Laptops
+  'gaming-laptop': [
+    { key: 'Processor', label: 'Processor', required: true, placeholder: 'e.g., Intel Core i7-13700H' },
+    { key: 'Graphics Card', label: 'Graphics Card', required: true, placeholder: 'e.g., NVIDIA RTX 4070 8GB' },
+    { key: 'RAM', label: 'RAM', required: true, placeholder: 'e.g., 16GB DDR5-4800' },
+    { key: 'Storage', label: 'Storage', required: true, placeholder: 'e.g., 1TB NVMe SSD' },
+    { key: 'Display Size', label: 'Display Size', required: true, placeholder: 'e.g., 15.6 inches' },
+    { key: 'Display Resolution', label: 'Display Resolution', required: true, placeholder: 'e.g., 1920x1080 (FHD)' },
+    { key: 'Refresh Rate', label: 'Refresh Rate', required: false, placeholder: 'e.g., 144Hz' },
+    { key: 'Panel Type', label: 'Panel Type', required: false, placeholder: 'e.g., IPS' },
+    { key: 'Battery Life', label: 'Battery Life', required: false, placeholder: 'e.g., Up to 8 hours' },
+    { key: 'Weight', label: 'Weight', required: false, placeholder: 'e.g., 2.5 kg' },
+    { key: 'Keyboard', label: 'Keyboard', required: false, placeholder: 'e.g., RGB Backlit Gaming Keyboard' },
+    { key: 'Ports', label: 'Ports', required: false, placeholder: 'e.g., USB-C, HDMI, Ethernet' },
+    { key: 'Cooling', label: 'Cooling System', required: false, placeholder: 'e.g., Dual Fan Cooling' }
+  ],
+  
+  'office-laptop': [
+    { key: 'Processor', label: 'Processor', required: true, placeholder: 'e.g., Intel Core i5-1235U' },
+    { key: 'Graphics', label: 'Graphics', required: false, placeholder: 'e.g., Intel Iris Xe Graphics' },
+    { key: 'RAM', label: 'RAM', required: true, placeholder: 'e.g., 8GB DDR4-3200' },
+    { key: 'Storage', label: 'Storage', required: true, placeholder: 'e.g., 512GB NVMe SSD' },
+    { key: 'Display Size', label: 'Display Size', required: true, placeholder: 'e.g., 14 inches' },
+    { key: 'Display Resolution', label: 'Display Resolution', required: true, placeholder: 'e.g., 1920x1080 (FHD)' },
+    { key: 'Panel Type', label: 'Panel Type', required: false, placeholder: 'e.g., IPS Anti-glare' },
+    { key: 'Battery Life', label: 'Battery Life', required: false, placeholder: 'e.g., Up to 12 hours' },
+    { key: 'Weight', label: 'Weight', required: false, placeholder: 'e.g., 1.4 kg' },
+    { key: 'Build Material', label: 'Build Material', required: false, placeholder: 'e.g., Aluminum' },
+    { key: 'Security', label: 'Security Features', required: false, placeholder: 'e.g., Fingerprint Reader, TPM' },
+    { key: 'Ports', label: 'Ports', required: false, placeholder: 'e.g., USB-C, USB-A, HDMI' },
+    { key: 'Webcam', label: 'Webcam', required: false, placeholder: 'e.g., 1080p HD Camera' }
   ]
 };
 
@@ -141,5 +208,57 @@ export const COMMON_FEATURES = {
     'Low Input Lag',
     'Ergonomic Stand',
     'Blue Light Filter'
+  ],
+  
+  // Gaming Accessories Features
+  'mouse': [
+    'High DPI Gaming Sensor',
+    'RGB Lighting',
+    'Programmable Buttons',
+    'Wireless Connectivity',
+    'Fast Charging',
+    'Ergonomic Design',
+    'Gaming Grade Materials'
+  ],
+  
+  'keyboard': [
+    'Mechanical Switches',
+    'RGB Per-Key Lighting',
+    'N-Key Rollover',
+    'Media Controls',
+    'Gaming Mode',
+    'Programmable Macros',
+    'Premium Build Quality'
+  ],
+  
+  'headset': [
+    'Surround Sound',
+    'Active Noise Cancellation',
+    'Detachable Microphone',
+    'Wireless Connectivity',
+    'Long Battery Life',
+    'Comfortable Padding',
+    'Multi-platform Compatible'
+  ],
+  
+  // Laptop Features
+  'gaming-laptop': [
+    'High Refresh Rate Display',
+    'RGB Keyboard Backlight',
+    'Advanced Cooling System',
+    'Gaming Mode Software',
+    'High Performance GPU',
+    'Fast NVMe Storage',
+    'Multiple Display Support'
+  ],
+  
+  'office-laptop': [
+    'Long Battery Life',
+    'Lightweight Design',
+    'Fast Boot Time',
+    'Security Features',
+    'Professional Build',
+    'Anti-glare Display',
+    'Quiet Operation'
   ]
 };

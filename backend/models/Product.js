@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-  // Basic Product Information
-  name: {
-    type: String,
-    required: true,
-    trim: true
-  },
+  // Basic Product Information (name replaced with seoTitle)
   slug: {
     type: String,
     unique: true,
+    sparse: true,  // Allow multiple null values
     required: false,
     lowercase: true
   },
@@ -23,12 +19,21 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['pc-parts', 'pc-builds', 'gaming-laptops', 'gaming-accessories']
+    enum: ['pc-parts', 'pc-builds', 'laptops', 'computer-accessories']
   },
   subCategory: {
     type: String,
     required: true,
-    enum: ['graphics-card', 'processors', 'motherboards', 'memory', 'storage', 'monitors', 'keyboard', 'mouse', 'headset']
+    enum: [
+      // PC Parts
+      'graphics-card', 'processors', 'motherboards', 'memory', 'storage', 'monitors',
+      // Computer Accessories 
+      'keyboard', 'mouse', 'headset', 'monitor', 'mousepad', 'controller', 'webcam', 'microphone', 'laptop-bag', 'gaming-chair', 'speakers', 'cooling-pad', 'usb-hub', 'docking-station', 'cable', 'adapter',
+      // Laptops
+      'gaming-laptop', 'office-laptop',
+      // PC Builds
+      'gaming-build', 'office-build', 'workstation-build', 'budget-build', 'high-end-build', 'streaming-build'
+    ]
   },
 
   // Brand and Model
@@ -45,7 +50,6 @@ const productSchema = new mongoose.Schema({
   // Inventory Management
   sku: {
     type: String,
-    unique: true,
     required: false,
     uppercase: true
   },
@@ -98,7 +102,13 @@ const productSchema = new mongoose.Schema({
     trim: true
   }],
   
-  // SEO Fields
+  // Product Title (replaces old 'name' field)
+  seoTitle: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 300  // Amazon-style detailed title
+  },
   metaTitle: {
     type: String,
     maxlength: 60
@@ -119,6 +129,31 @@ const productSchema = new mongoose.Schema({
     default: 1
   },
   
+  // Service Options (Amazon-style)
+  serviceOptions: {
+    freeDelivery: {
+      type: Boolean,
+      default: true
+    },
+    replacementDays: {
+      type: Number, // days for replacement (e.g., 7, 10, 15, 30)
+      default: 7,
+      min: 0
+    },
+    cashOnDelivery: {
+      type: Boolean,
+      default: true
+    },
+    warrantyService: {
+      type: Boolean,
+      default: true
+    },
+    freeInstallation: {
+      type: Boolean,
+      default: false
+    }
+  },
+  
   // Status
   isActive: {
     type: Boolean,
@@ -127,10 +162,80 @@ const productSchema = new mongoose.Schema({
   isFeatured: {
     type: Boolean,
     default: false
+  },
+  
+  // Search & Filter Optimization Fields
+  searchText: {
+    type: String,
+    index: 'text' // Full-text search index
+  },
+  priceRange: {
+    type: String,
+    enum: ['budget', 'mid-range', 'premium', 'high-end'],
+    index: true
+  },
+  availability: {
+    type: String,
+    enum: ['in-stock', 'out-of-stock', 'pre-order'],
+    default: 'in-stock',
+    index: true
   }
   
 }, {
   timestamps: true
 });
+
+// Compound Indexes for Fast Filtering
+// productSchema.index({ category: 1, subCategory: 1 });
+// productSchema.index({ brand: 1, price: 1 });
+// productSchema.index({ price: 1, isActive: 1 });
+// productSchema.index({ createdAt: -1, isFeatured: -1 });
+
+// Text Search Index
+productSchema.index({
+  name: 'text',
+  description: 'text',
+  brand: 'text',
+  'specifications.model': 'text',
+  features: 'text'
+});
+
+// Pre-save Hook: Auto-generate fields
+productSchema.pre('save', function(next) {
+  // Auto-generate slug if not provided or empty
+  if (!this.slug && this.seoTitle) {
+    this.slug = this.seoTitle
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      .substring(0, 200); // Increased slug length for full specifications
+  }
+  
+  // Auto-generate searchText for better search
+  this.searchText = [
+    this.seoTitle,
+    this.brand,
+    this.description,
+    ...this.features,
+    this.category?.replace('-', ' '),
+    this.subCategory?.replace('-', ' ')
+  ].join(' ').toLowerCase();
+  
+  // Auto-set availability based on stock
+  if (this.stockQuantity > 0) {
+    this.availability = 'in-stock';
+  } else {
+    this.availability = 'out-of-stock';
+  }
+  
+  // Auto-set price range
+  if (this.price < 5000) this.priceRange = 'budget';
+  else if (this.price < 25000) this.priceRange = 'mid-range';
+  else if (this.price < 75000) this.priceRange = 'premium';
+  else this.priceRange = 'high-end';
+  
+  next();
+});
+
 
 module.exports = mongoose.model('Product', productSchema);

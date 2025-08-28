@@ -34,7 +34,7 @@ const Navbar = () => {
                 PC Build
               </Link>
               <Link 
-                to="/gaming-laptop" 
+                to="/laptops" 
                 className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
               >
                 Laptop
@@ -102,7 +102,7 @@ const Navbar = () => {
                 PC Build
               </Link>
               <Link
-                to="/gaming-laptop"
+                to="/laptops"
                 className="text-white hover:text-cyan-300 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
                 onClick={() => setIsOpen(false)}
               >
