@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Hero = () => {
 
   return (
-    <section className="relative bg-gradient-to-br from-gray-50 via-blue-50 to-cyan-50 text-gray-900 py-8 md:py-12 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-gray-50 via-blue-50 to-cyan-50 text-gray-900 py-8 md:py-12">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/5 via-blue-600/5 to-purple-600/5"></div>
       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-cyan-400/10 to-transparent rounded-full blur-3xl"></div>
@@ -111,7 +111,7 @@ const Hero = () => {
                 </h1>
                 
                 <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                  From custom PC builds to premium gaming accessories, we deliver cutting-edge technology solutions.
+                  Experience ultimate performance with custom PC builds featuring premium components, advanced cooling systems, and professional assembly services.
                 </p>
               </div>
 

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { toast } from 'react-toastify';
 
 const Laptops = () => {
   const [laptops, setLaptops] = useState([]);
@@ -10,6 +12,7 @@ const Laptops = () => {
   const [priceRange, setPriceRange] = useState('all');
   const [selectedBrand, setSelectedBrand] = useState('all');
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     fetchLaptops();
@@ -85,6 +88,16 @@ const Laptops = () => {
     }
 
     setFilteredLaptops(filtered);
+  };
+
+  const handleAddToCart = (laptop, e) => {
+    e.stopPropagation(); // Prevent navigation when clicking add to cart
+    if (laptop.stockQuantity > 0) {
+      addToCart(laptop);
+      toast.success('Added to cart!');
+    } else {
+      toast.error('Product is out of stock');
+    }
   };
 
   const getBrands = () => {
@@ -301,7 +314,7 @@ const Laptops = () => {
                   </h3>
 
                   {/* Price */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="flex flex-col">
                       <span className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
                         {formatPrice(laptop.price)}
@@ -319,6 +332,28 @@ const Laptops = () => {
                       </svg>
                     </div>
                   </div>
+
+                  {/* Add to Cart Button */}
+                  <button
+                    onClick={(e) => handleAddToCart(laptop, e)}
+                    disabled={laptop.stockQuantity === 0}
+                    className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
+                      laptop.stockQuantity > 0
+                        ? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                  >
+                    {laptop.stockQuantity > 0 ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m2.6 8L8 13m0 0L5.6 5M8 13v6a2 2 0 002 2h8a2 2 0 002-2v-6M8 13H6m6 8a2 2 0 100-4 2 2 0 000 4zm6 0a2 2 0 100-4 2 2 0 000 4z" />
+                        </svg>
+                        <span>Add to Cart</span>
+                      </div>
+                    ) : (
+                      'Out of Stock'
+                    )}
+                  </button>
                 </div>
               </div>
             ))}

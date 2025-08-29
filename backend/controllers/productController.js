@@ -253,6 +253,174 @@ const getProductsBySubCategory = async (req, res) => {
   }
 };
 
+const searchProducts = async (req, res) => {
+  try {
+    const { 
+      q,           // search query
+      category,    // filter by category
+      subCategory, // filter by subcategory
+      brand,       // filter by brand
+      minPrice,    // minimum price
+      maxPrice,    // maximum price
+      sort = 'relevance', // sort by relevance, price_asc, price_desc, newest
+      limit = 20,  // results per page
+      page = 1     // page number
+    } = req.query;
+
+    // Build base query
+    let query = { isActive: true };
+
+    // Add search text query if provided
+    if (q && q.trim()) {
+      const searchTerm = q.trim();
+      
+      // Create multiple search patterns for flexibility
+      const searchPatterns = [];
+      
+      // Original search term
+      searchPatterns.push(new RegExp(searchTerm, 'i'));
+      
+      // Remove 's' from end (graphics cards -> graphics card)
+      if (searchTerm.endsWith('s')) {
+        searchPatterns.push(new RegExp(searchTerm.slice(0, -1), 'i'));
+      }
+      
+      // Add 's' to end (graphics card -> graphics cards)
+      if (!searchTerm.endsWith('s')) {
+        searchPatterns.push(new RegExp(searchTerm + 's', 'i'));
+      }
+      
+      // Split search term into words for partial matching
+      const words = searchTerm.split(' ').filter(word => word.length > 2);
+      words.forEach(word => {
+        searchPatterns.push(new RegExp(word, 'i'));
+        // Also add singular/plural versions of each word
+        if (word.endsWith('s')) {
+          searchPatterns.push(new RegExp(word.slice(0, -1), 'i'));
+        } else {
+          searchPatterns.push(new RegExp(word + 's', 'i'));
+        }
+      });
+
+      // Create $or conditions for each field with all search patterns
+      const searchConditions = [];
+      
+      searchPatterns.forEach(pattern => {
+        searchConditions.push(
+          { seoTitle: pattern },
+          { description: pattern },
+          { brand: pattern },
+          { model: pattern },
+          { category: pattern },
+          { subCategory: pattern },
+          { keywords: { $in: [pattern] } },
+          { 'specifications.key': pattern },
+          { 'specifications.value': pattern }
+        );
+      });
+
+      query.$or = searchConditions;
+    }
+
+    // Add category filter
+    if (category && category !== 'all') {
+      query.category = category;
+    }
+
+    // Add subcategory filter
+    if (subCategory && subCategory !== 'all') {
+      query.subCategory = subCategory;
+    }
+
+    // Add brand filter
+    if (brand && brand !== 'all') {
+      query.brand = new RegExp(brand, 'i');
+    }
+
+    // Add price range filter
+    if (minPrice || maxPrice) {
+      query.price = {};
+      if (minPrice) query.price.$gte = Number(minPrice);
+      if (maxPrice) query.price.$lte = Number(maxPrice);
+    }
+
+    // Build sort object
+    let sortObj = {};
+    switch (sort) {
+      case 'price_asc':
+        sortObj.price = 1;
+        break;
+      case 'price_desc':
+        sortObj.price = -1;
+        break;
+      case 'newest':
+        sortObj.createdAt = -1;
+        break;
+      case 'name':
+        sortObj.seoTitle = 1;
+        break;
+      case 'relevance':
+      default:
+        // For relevance, we'll sort by createdAt desc as default
+        // In a more advanced implementation, you could use text search scores
+        sortObj.createdAt = -1;
+        break;
+    }
+
+    // Calculate pagination
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Execute search
+    const products = await Product.find(query)
+      .sort(sortObj)
+      .limit(Number(limit))
+      .skip(skip);
+
+    // Get total count for pagination
+    const total = await Product.countDocuments(query);
+
+    // Get unique brands and categories for filters (if search results exist)
+    const facets = {};
+    if (total > 0) {
+      const aggregationPipeline = [
+        { $match: query },
+        {
+          $group: {
+            _id: null,
+            brands: { $addToSet: '$brand' },
+            categories: { $addToSet: '$category' },
+            subCategories: { $addToSet: '$subCategory' }
+          }
+        }
+      ];
+
+      const facetResults = await Product.aggregate(aggregationPipeline);
+      if (facetResults.length > 0) {
+        facets.brands = facetResults[0].brands.filter(Boolean).sort();
+        facets.categories = facetResults[0].categories.filter(Boolean).sort();
+        facets.subCategories = facetResults[0].subCategories.filter(Boolean).sort();
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      query: q,
+      count: products.length,
+      total: total,
+      page: Number(page),
+      totalPages: Math.ceil(total / Number(limit)),
+      facets: facets,
+      data: products
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -284,5 +452,6 @@ module.exports = {
   getAllProducts,
   getProductsByCategory,
   getProductsBySubCategory,
+  searchProducts,
   deleteProduct
 };

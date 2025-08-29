@@ -4,6 +4,8 @@ const cors = require('cors')
 const connectToDb = require('./config/mongodb');
 const productRoutes = require('./routes/productRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const userRoutes = require('./routes/userRoutes');
+const adminUserRoutes = require('./routes/adminUserRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,6 +23,8 @@ app.use('/uploads', express.static('uploads'));
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/admin/users', adminUserRoutes);
 
 // Root route
 app.get('/', (req, res) => {

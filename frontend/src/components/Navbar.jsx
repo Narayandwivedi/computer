@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const { getTotalItems } = useCart()
 
   return (
     <nav className="bg-gradient-to-r from-gray-900 via-gray-800 to-black shadow-lg">
@@ -56,6 +58,22 @@ const Navbar = () => {
                 className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
               >
                 Contact Us
+              </Link>
+              <Link 
+                to="/cart" 
+                className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 relative"
+              >
+                <div className="flex items-center space-x-1">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m2.6 8L8 13m0 0L5.6 5M8 13v6a2 2 0 002 2h8a2 2 0 002-2v-6M8 13H6m6 8a2 2 0 100-4 2 2 0 000 4zm6 0a2 2 0 100-4 2 2 0 000 4z" />
+                  </svg>
+                  <span>Cart</span>
+                  {getTotalItems() > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {getTotalItems()}
+                    </span>
+                  )}
+                </div>
               </Link>
               <Link 
                 to="/login"
@@ -128,6 +146,23 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Contact Us
+              </Link>
+              <Link
+                to="/cart"
+                className="text-white hover:text-cyan-300 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 relative"
+                onClick={() => setIsOpen(false)}
+              >
+                <div className="flex items-center space-x-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m2.6 8L8 13m0 0L5.6 5M8 13v6a2 2 0 002 2h8a2 2 0 002-2v-6M8 13H6m6 8a2 2 0 100-4 2 2 0 000 4zm6 0a2 2 0 100-4 2 2 0 000 4z" />
+                  </svg>
+                  <span>Cart</span>
+                  {getTotalItems() > 0 && (
+                    <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center ml-auto">
+                      {getTotalItems()}
+                    </span>
+                  )}
+                </div>
               </Link>
               <Link 
                 to="/login"

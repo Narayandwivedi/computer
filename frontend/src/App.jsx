@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AppContextProvider } from './context/AppContext'
+import { CartProvider } from './context/CartContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Homepage from './pages/Homepage'
@@ -26,6 +27,8 @@ import GamingChair from './pages/Computer Accessories/GamingChair'
 import LaptopBag from './pages/Computer Accessories/LaptopBag'
 import CustomPcBuild from './pages/CustomPcBuild'
 import Laptops from './pages/Laptops'
+import SearchResults from './pages/SearchResults'
+import Cart from './pages/Cart'
 
 const AppContent = () => {
   const location = useLocation()
@@ -36,6 +39,8 @@ const AppContent = () => {
       {!isLoginPage && <Navbar />}
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/search" element={<SearchResults />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
@@ -91,7 +96,7 @@ const AppContent = () => {
       {!isLoginPage && <Footer />}
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={600}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -109,7 +114,9 @@ const App = () => {
   return (
     <Router>
       <AppContextProvider>
-        <AppContent />
+        <CartProvider>
+          <AppContent />
+        </CartProvider>
       </AppContextProvider>
     </Router>
   )
