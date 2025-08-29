@@ -37,13 +37,13 @@ const HeroCarousel = () => {
       </div>
       
       {/* Carousel Indicators */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20">
-        <div className="flex justify-center space-x-3 bg-black/20 backdrop-blur-sm rounded-full px-4 py-2">
+      <div className="absolute bottom-3 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="flex justify-center space-x-2 sm:space-x-3 bg-black/20 backdrop-blur-sm rounded-full px-3 py-1.5 sm:px-4 sm:py-2">
           {heroComponents.map((hero, index) => (
             <button
               key={hero.id}
               onClick={() => setCurrentHero(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                 index === currentHero 
                   ? 'bg-white shadow-lg scale-125' 
                   : 'bg-white/60 hover:bg-white/80'
@@ -53,8 +53,8 @@ const HeroCarousel = () => {
           ))}
         </div>
         
-        {/* Hero Labels */}
-        <div className="text-center mt-2">
+        {/* Hero Labels - Hidden on mobile to save space */}
+        <div className="hidden sm:block text-center mt-2">
           <span className="text-xs text-white/80 bg-black/20 backdrop-blur-sm px-3 py-1 rounded-full">
             {currentHero === 0 ? 'Custom PC Builds' : 'Gaming Laptops'}
           </span>
