@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Hero = () => {
+
   return (
     <section className="relative bg-gradient-to-br from-gray-50 via-blue-50 to-cyan-50 text-gray-900 py-8 md:py-12 overflow-hidden">
       {/* Background Effects */}
@@ -179,7 +180,7 @@ const Hero = () => {
             {/* Right Image Section */}
             <div className="relative flex justify-center lg:justify-end">
               <div className="relative max-w-md w-full">
-                {/* Main PC Image Container */}
+                {/* Main Image Container */}
                 <div className="relative bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl p-6 shadow-xl border border-gray-200 overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-2xl"></div>
                   <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent rounded-2xl"></div>

@@ -129,7 +129,7 @@ const CustomPcBuild = () => {
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                       <div className="flex items-center min-w-0 flex-1">
-                        <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mr-4 sm:mr-6 transition-all duration-300 flex-shrink-0 ${
+                        <div className={`w-20 h-20 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mr-4 sm:mr-6 transition-all duration-300 flex-shrink-0 ${
                           selectedComponents[category.key] 
                             ? 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg' 
                             : 'bg-gray-100 group-hover:bg-gray-200'
@@ -138,7 +138,7 @@ const CustomPcBuild = () => {
                             <img 
                               src={category.icon} 
                               alt={category.name}
-                              className={`w-10 h-10 sm:w-14 sm:h-14 object-contain transition-all duration-300 ${
+                              className={`w-12 h-12 sm:w-14 sm:h-14 object-contain transition-all duration-300 ${
                                 selectedComponents[category.key] 
                                   ? 'brightness-0 invert' 
                                   : ''
@@ -172,16 +172,11 @@ const CustomPcBuild = () => {
                               </span>
                             )}
                           </div>
-                          <p className={`text-sm transition-colors duration-300 mt-1 ${
-                            selectedComponents[category.key] 
-                              ? 'text-cyan-600 font-medium' 
-                              : 'text-gray-500'
-                          }`}>
-                            {selectedComponents[category.key] ? 
-                              `✅ ${selectedComponents[category.key].name}` : 
-                              '⏳ No component selected'
-                            }
-                          </p>
+                          {selectedComponents[category.key] && (
+                            <p className="text-sm text-cyan-600 font-medium transition-colors duration-300 mt-1">
+                              ✅ {selectedComponents[category.key].name}
+                            </p>
+                          )}
                         </div>
                       </div>
                       {selectedComponents[category.key] && (
@@ -256,7 +251,7 @@ const CustomPcBuild = () => {
                       {selectedComponents[category.key] && (
                         <div className="bg-gradient-to-br from-white to-gray-50 p-3 sm:p-4 rounded-xl border border-gray-200 shadow-sm">
                           <div className="flex items-start space-x-3 sm:space-x-4 mb-3">
-                            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-xl shadow-sm border border-gray-200 flex-shrink-0 p-1">
+                            <div className="w-16 h-16 sm:w-16 sm:h-16 bg-white rounded-xl shadow-sm border border-gray-200 flex-shrink-0 p-1">
                               <img 
                                 src={selectedComponents[category.key].image} 
                                 alt={selectedComponents[category.key].name}
@@ -403,7 +398,7 @@ const CustomPcBuild = () => {
                           <img 
                             src={category.icon} 
                             alt={category.name}
-                            className="w-7 h-7 object-contain mr-3"
+                            className="w-10 h-10 object-contain mr-3"
                             onError={(e) => {
                               e.target.style.display = 'none';
                               e.target.nextSibling.style.display = 'inline-block';
